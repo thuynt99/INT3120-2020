@@ -1,11 +1,12 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, Image} from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import { Feather } from '@expo/vector-icons/';
+import * as React from "react";
+import { StyleSheet, Text, View, Image } from "react-native";
+import { Input, Button } from "react-native-elements";
+import { Feather } from "@expo/vector-icons/";
 
-import logo from '../assets/images/class-icon.png'
+import logo from "../assets/images/class-icon.png";
+import Colors from "../constants/Colors";
 
-export default function signUp({navigation})  {
+export default function signUp({ navigation }) {
   const [phone, setPhone] = React.useState();
   const [password, setPassword] = React.useState();
   const [email, setEmail] = React.useState();
@@ -17,61 +18,61 @@ export default function signUp({navigation})  {
       <Text style={styles.appName}>Sign up to Classroom</Text>
       <View style={styles.form}>
         <Input
-          placeholder='Số điện thoại'
+          placeholder="Số điện thoại"
           leftIcon={
             <Feather
-              name='phone'
+              name="phone"
               size={20}
-              color='grey'
-              style={{marginRight: 15}}
+              color="grey"
+              style={{ marginRight: 15 }}
             />
           }
           onChangeText={(phone) => setPhone(phone)}
         />
         <Input
-          placeholder='Họ tên'
+          placeholder="Họ tên"
           leftIcon={
             <Feather
-              name='user'
+              name="user"
               size={20}
-              color='grey'
-              style={{marginRight: 15}}
+              color="grey"
+              style={{ marginRight: 15 }}
             />
           }
           onChangeText={(name) => setName(name)}
         />
         <Input
-          placeholder='Email'
+          placeholder="Email"
           leftIcon={
             <Feather
-              name='mail'
+              name="mail"
               size={20}
-              color='grey'
-              style={{marginRight: 15}}
+              color="grey"
+              style={{ marginRight: 15 }}
             />
           }
           onChangeText={(email) => setEmail(email)}
         />
         <Input
-          placeholder='Trường'
+          placeholder="Trường"
           leftIcon={
             <Feather
-              name='home'
+              name="home"
               size={20}
-              color='grey'
-              style={{marginRight: 15}}
+              color="grey"
+              style={{ marginRight: 15 }}
             />
           }
           onChangeText={(school) => setSchool(school)}
         />
         <Input
-          placeholder='Mật khẩu'
+          placeholder="Mật khẩu"
           leftIcon={
             <Feather
-              name='lock'
+              name="lock"
               size={20}
-              color='grey'
-              style={{marginRight: 15}}
+              color="grey"
+              style={{ marginRight: 15 }}
             />
           }
           onChangeText={(password) => setPassword(password)}
@@ -79,9 +80,13 @@ export default function signUp({navigation})  {
         <View style={styles.buttonSignin}>
           <Button
             title="Sign Up"
-            onPress={() => signUp(phone,password, name, email, school)}
+            onPress={() => signUp(phone, password, name, email, school)}
           />
-          <Button title="Sign in" type="clear" onPress={() => navigation.navigate('SignIn')} />
+          <Button
+            title="Sign in"
+            type="clear"
+            onPress={() => navigation.navigate("SignIn")}
+          />
         </View>
       </View>
     </View>
@@ -90,31 +95,31 @@ export default function signUp({navigation})  {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: '20%',
+    paddingTop: "20%",
     flex: 1,
-    backgroundColor: '#fff',
-    flexDirection: 'column',
-    alignItems: 'center',
+    backgroundColor: Colors.background,
+    flexDirection: "column",
+    alignItems: "center",
   },
   form: {
-    width: '80%',
+    width: "80%",
     height: 400,
-    flexDirection: 'column',
-    justifyContent: 'space-evenly',
-    marginTop: '5%',
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    marginTop: "5%",
   },
   logo: {
     height: 120,
     width: 120,
   },
   buttonSignin: {
-    alignSelf: 'stretch',
+    alignSelf: "stretch",
     paddingLeft: 60,
     paddingRight: 60,
   },
   appName: {
     fontSize: 25,
-    fontWeight: 'bold',
-    color: '#55CAED',
-  }
+    fontWeight: "bold",
+    color: Colors.titleText,
+  },
 });

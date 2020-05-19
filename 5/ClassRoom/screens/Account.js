@@ -1,25 +1,30 @@
-import * as React from 'react';
-import { StyleSheet, Text, View, ActivityIndicator} from 'react-native';
-import { Avatar, Button } from 'react-native-elements';
-import { RectButton } from 'react-native-gesture-handler';
-import {Feather } from '@expo/vector-icons/';
-import {AuthContext} from '../Context';
+import * as React from "react";
+import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { Avatar, Button } from "react-native-elements";
+import { RectButton } from "react-native-gesture-handler";
+import { Feather } from "@expo/vector-icons/";
+import { AuthContext } from "../Context";
+import Colors from "../constants/Colors";
 
 export default function Account() {
-  const {signOut, getToken} = React.useContext(AuthContext);
+  const { signOut, getToken } = React.useContext(AuthContext);
   const [isLoading, setLoading] = React.useState(true);
-  const token = "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MzEsInVzZXJuYW1lIjoiU29tZW9uZSIsImVtYWlsIjoic29tZW9uZTJAZ21haWwuY29tIiwicGhvbmUiOiIxMjM0NSIsInNjaG9vbCI6IlVFVCIsImF1dGhvcml0aWVzIjpbIlJPTEVfU1RVREVOVCJdLCJpYXQiOjE1ODY3MTUxMDQsImV4cCI6MTU4NzU3OTEwNH0.2yOvXnOQv2N0jaJL2J5coe_seRPVPvC1F7rxFQhgUeOUzi9U3GiVReVGvbJN1IB8aFUp92wGDqshTa4Pf5IpMA";
+  const token =
+    "eyJhbGciOiJIUzUxMiJ9.eyJpZCI6MzEsInVzZXJuYW1lIjoiU29tZW9uZSIsImVtYWlsIjoic29tZW9uZTJAZ21haWwuY29tIiwicGhvbmUiOiIxMjM0NSIsInNjaG9vbCI6IlVFVCIsImF1dGhvcml0aWVzIjpbIlJPTEVfU1RVREVOVCJdLCJpYXQiOjE1ODY3MTUxMDQsImV4cCI6MTU4NzU3OTEwNH0.2yOvXnOQv2N0jaJL2J5coe_seRPVPvC1F7rxFQhgUeOUzi9U3GiVReVGvbJN1IB8aFUp92wGDqshTa4Pf5IpMA";
   const [user, setUser] = React.useState("");
   const [userId, setId] = React.useState("41");
   const [school, setSchool] = React.useState("");
 
   React.useEffect(() => {
-    fetch('https://mobile-uet.herokuapp.com/api/'+userId+'/get-user-by-id', {
-      method: "GET",
-      headers: {
-        'Authorization': 'Bearer ' + token
+    fetch(
+      "https://mobile-uet.herokuapp.com/api/" + userId + "/get-user-by-id",
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       }
-    })
+    )
       .then((response) => response.json())
       .then((json) => {
         if (json.code == "success") {
@@ -34,14 +39,17 @@ export default function Account() {
 
   return (
     <View style={styles.container}>
-      {( isLoading || !token ) ? <ActivityIndicator size={80} color="#55CAED" /> : (
+      {isLoading || !token ? (
+        <ActivityIndicator size={80} color={Colors.titleText} />
+      ) : (
         <View style={styles.info}>
           <Avatar
             size={100}
             rounded
             title={getName(String(user)).charAt(0)}
             style={styles.avatar}
-            overlayContainerStyle={{backgroundColor: '#3498db'}}s
+            overlayContainerStyle={{ backgroundColor: Colors.iconColor }}
+            s
           />
           <Text style={styles.userName}>{user}</Text>
           <Text>{school}</Text>
@@ -50,29 +58,31 @@ export default function Account() {
       <View style={styles.menu}>
         <RectButton style={styles.option}>
           <View style={styles.optionLeft}>
-            <Feather name="user" size={35} color='#555'/>
+            <Feather name="user" size={35} color={Colors.text} />
           </View>
           <View style={styles.optionRight}>
-              <Text style={styles.optionLabel}>Tài khoản</Text>
-              <Text style={styles.optionText}>Chỉnh sửa thông tin tài khoản</Text>
+            <Text style={styles.optionLabel}>Tài khoản</Text>
+            <Text style={styles.optionText}>Chỉnh sửa thông tin tài khoản</Text>
           </View>
         </RectButton>
         <RectButton style={styles.option}>
           <View style={styles.optionLeft}>
-            <Feather name="lock" size={35} color='#555'/>
+            <Feather name="lock" size={35} color={Colors.text} />
           </View>
           <View style={styles.optionRight}>
-              <Text style={styles.optionLabel}>Mật khẩu</Text>
-              <Text style={styles.optionText}>Thay đổi mật khẩu</Text>
+            <Text style={styles.optionLabel}>Mật khẩu</Text>
+            <Text style={styles.optionText}>Thay đổi mật khẩu</Text>
           </View>
         </RectButton>
-        <RectButton style={styles.option}  onPress={() => signOut()}>
+        <RectButton style={styles.option} onPress={() => signOut()}>
           <View style={styles.optionLeft}>
-            <Feather name="log-out" size={35} color='#555'/>
+            <Feather name="log-out" size={35} color={Colors.text} />
           </View>
           <View style={styles.optionRight}>
-              <Text style={styles.optionLabel}>Đăng xuất</Text>
-              <Text style={styles.optionText}>Đăng xuất tài khoản khỏi thiết bị</Text>
+            <Text style={styles.optionLabel}>Đăng xuất</Text>
+            <Text style={styles.optionText}>
+              Đăng xuất tài khoản khỏi thiết bị
+            </Text>
           </View>
         </RectButton>
       </View>
@@ -83,15 +93,15 @@ export default function Account() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
-    backgroundColor: '#fff',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
+    height: "100%",
+    backgroundColor: Colors.background,
+    flexDirection: "column",
+    justifyContent: "space-around",
     alignItems: "center",
   },
   info: {
-    flexDirection: 'column',
-    alignItems: 'center',
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     width: 100,
@@ -102,39 +112,39 @@ const styles = StyleSheet.create({
   userName: {
     marginTop: 10,
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#777',
+    fontWeight: "bold",
+    color: "#777",
     lineHeight: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   menu: {
-    width: '90%',
-    flexDirection: 'column',
+    width: "90%",
+    flexDirection: "column",
   },
-  option:{
+  option: {
     height: 55,
-    flexDirection: 'row',
+    flexDirection: "row",
     marginBottom: 30,
-    justifyContent: 'space-around',
+    justifyContent: "space-around",
   },
   optionLeft: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
+    alignItems: "flex-start",
+    justifyContent: "center",
   },
   optionRight: {
-    width: '80%',
-    justifyContent: 'space-between',
+    width: "80%",
+    justifyContent: "space-between",
     paddingBottom: 10,
-    borderBottomColor: '#555',
+    borderBottomColor: Colors.text,
     borderBottomWidth: 0.5,
   },
   optionLabel: {
-    fontWeight: 'bold',
-    color: '#555',
+    fontWeight: "bold",
+    color: Colors.text,
     fontSize: 17,
   },
   optionText: {
-    color: '#555',
+    color: Colors.text,
     fontSize: 15,
   },
 });

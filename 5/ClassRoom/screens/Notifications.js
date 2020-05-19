@@ -1,7 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
-import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { Ionicons } from "@expo/vector-icons";
+import * as React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { RectButton, ScrollView } from "react-native-gesture-handler";
+import Colors from "../constants/Colors";
 
 export default class Notifications extends React.Component {
   constructor(props) {
@@ -13,29 +14,33 @@ export default class Notifications extends React.Component {
           label: "Hệ thống",
           content: "Chào mừng đến với Classroom",
         },
-      ], 
+      ],
     };
   }
 
   render() {
-    const {notifications} = this.state;
+    const { notifications } = this.state;
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        {notifications.map(notification => (
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        {notifications.map((notification) => (
           <OptionButton
             key={notification.key}
             label={notification.label}
-            content={notification.content}/>
+            content={notification.content}
+          />
         ))}
       </ScrollView>
     );
-  };
+  }
 }
 
-function OptionButton({label, content}) {
+function OptionButton({ label, content }) {
   return (
     <RectButton style={[styles.option]}>
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         <View style={styles.optionTextContainer}>
           <Text style={styles.optionLabel}>{label}</Text>
         </View>
@@ -50,7 +55,7 @@ function OptionButton({label, content}) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.background,
   },
   contentContainer: {
     paddingTop: 15,
@@ -62,20 +67,20 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderWidth: StyleSheet.hairlineWidth,
     borderBottomWidth: 0,
-    borderColor: '#ededed',
+    borderColor: Colors.optionBg,
   },
   optionText: {
     fontSize: 15,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     marginTop: 1,
   },
   optionLabel: {
     fontSize: 15,
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
+    fontWeight: "bold",
+    alignSelf: "flex-start",
     marginTop: 1,
     marginRight: 5,
-    color: '#3498db',
+    color: Colors.iconColor,
     paddingBottom: 5,
   },
 });
