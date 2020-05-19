@@ -1,81 +1,173 @@
-import { Ionicons } from '@expo/vector-icons';
-import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { Ionicons } from "@expo/vector-icons";
+import * as React from "react";
+import { StyleSheet, Text, View, FlatList, Image } from "react-native";
+import { RectButton, ScrollView } from "react-native-gesture-handler";
 
 export default class Notifications extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      notifications: [
+      data: [
         {
-          key: "a1",
-          label: "Hệ thống",
-          content: "Chào mừng đến với Classroom",
+          id: 3,
+          image: "https://bootdey.com/img/Content/avatar/avatar7.png",
+          name: "March SoulLaComa",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+          attachment: "https://lorempixel.com/100/100/nature/6/",
         },
-      ], 
+        {
+          id: 2,
+          image: "https://bootdey.com/img/Content/avatar/avatar6.png",
+          name: "John DoeLink",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+          attachment: "https://lorempixel.com/100/100/nature/5/",
+        },
+        {
+          id: 4,
+          image: "https://bootdey.com/img/Content/avatar/avatar2.png",
+          name: "Finn DoRemiFaso",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+          attachment: "",
+        },
+        {
+          id: 5,
+          image: "https://bootdey.com/img/Content/avatar/avatar3.png",
+          name: "Maria More More",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+          attachment: "",
+        },
+        {
+          id: 1,
+          image: "https://bootdey.com/img/Content/avatar/avatar1.png",
+          name: "Frank Odalthh",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+          attachment: "https://lorempixel.com/100/100/nature/4/",
+        },
+        {
+          id: 6,
+          image: "https://bootdey.com/img/Content/avatar/avatar4.png",
+          name: "Clark June Boom!",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+          attachment: "",
+        },
+        {
+          id: 7,
+          image: "https://bootdey.com/img/Content/avatar/avatar5.png",
+          name: "The googler",
+          text:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.",
+          attachment: "",
+        },
+      ],
     };
   }
 
   render() {
-    const {notifications} = this.state;
     return (
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-        {notifications.map(notification => (
-          <OptionButton
-            key={notification.key}
-            label={notification.label}
-            content={notification.content}/>
-        ))}
-      </ScrollView>
-    );
-  };
-}
+      <FlatList
+        style={styles.root}
+        data={this.state.data}
+        extraData={this.state}
+        ItemSeparatorComponent={() => {
+          return <View style={styles.separator} />;
+        }}
+        keyExtractor={(item) => {
+          return item.id;
+        }}
+        renderItem={(item) => {
+          const Notification = item.item;
+          let attachment = <View />;
 
-function OptionButton({label, content}) {
-  return (
-    <RectButton style={[styles.option]}>
-      <View style={{flex:1}}>
-        <View style={styles.optionTextContainer}>
-          <Text style={styles.optionLabel}>{label}</Text>
-        </View>
-        <View style={styles.optionTextContainer}>
-          <Text style={styles.optionText}>{content}</Text>
-        </View>
-      </View>
-    </RectButton>
-  );
+          let mainContentStyle;
+          if (Notification.attachment) {
+            mainContentStyle = styles.mainContent;
+            attachment = (
+              <Image
+                style={styles.attachment}
+                source={{ uri: Notification.attachment }}
+              />
+            );
+          }
+          return (
+            <View style={styles.container}>
+              <Image
+                source={{ uri: Notification.image }}
+                style={styles.avatar}
+              />
+              <View style={styles.content}>
+                <View style={mainContentStyle}>
+                  <View style={styles.text}>
+                    <Text style={styles.name}>{Notification.name}</Text>
+                    <Text>{Notification.text}</Text>
+                  </View>
+                  <Text style={styles.timeAgo}>2 hours ago</Text>
+                </View>
+                {attachment}
+              </View>
+            </View>
+          );
+        }}
+      />
+    );
+  }
 }
 
 const styles = StyleSheet.create({
+  root: {
+    backgroundColor: "#FFFFFF",
+  },
   container: {
+    padding: 16,
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderColor: "#FFFFFF",
+    alignItems: "flex-start",
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+  },
+  text: {
+    marginBottom: 5,
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  content: {
     flex: 1,
-    backgroundColor: '#fff',
+    marginLeft: 16,
+    marginRight: 0,
   },
-  contentContainer: {
-    paddingTop: 15,
+  mainContent: {
+    marginRight: 60,
   },
-  option: {
-    paddingLeft: 40,
-    paddingRight: 40,
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
+  img: {
+    height: 50,
+    width: 50,
+    margin: 0,
   },
-  optionText: {
-    fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
+  attachment: {
+    position: "absolute",
+    right: 0,
+    height: 50,
+    width: 50,
   },
-  optionLabel: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    alignSelf: 'flex-start',
-    marginTop: 1,
-    marginRight: 5,
-    color: '#3498db',
-    paddingBottom: 5,
+  separator: {
+    height: 1,
+    backgroundColor: "#CCCCCC",
+  },
+  timeAgo: {
+    fontSize: 12,
+    color: "#696969",
+  },
+  name: {
+    fontSize: 16,
+    color: "#1E90FF",
   },
 });
